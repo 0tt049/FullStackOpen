@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 const Button = ({ handleClick, text }) => {
-  return ( <button onClick={handleClick}>{text}</button> )
+  return (<button onClick={handleClick}>{text}</button>)
 }
 
 const App = () => {
@@ -15,18 +15,34 @@ const App = () => {
     'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients.',
     'The only way to go fast, is to go well.'
   ]
+  const initialVotes = new Uint8Array(anecdotes.length)
 
   const [selected, setSelected] = useState(0)
+  const [votes, setVotes] = useState(initialVotes)
 
   const setRand = () => {
-    setSelected(Math.abs(Math.round(Math.random() * anecdotes.length - 1)))
+    const newRand = Math.abs(Math.round(Math.random() * anecdotes.length - 1))
+    newRand === selected ? setRand() : setSelected(newRand)
   }
+
+  const setScore = () => {
+    const newVotes = [...votes]
+    newVotes[selected]++
+    setVotes(newVotes)
+  }
+
+  let newMax = [...votes]
+  newMax = newMax.indexOf(Math.max(...newMax))
+
   return (
     <div>
-      <Button handleClick={() => setRand()} text="Yo!" />
-      <p>
-        {anecdotes[selected]}
-      </p>
+      <h1>Anecdote of the day</h1>
+      <blockquote><p>{anecdotes[selected]}</p></blockquote>
+      <p>Has {votes[selected]} votes</p>
+      <Button handleClick={() => setRand()} text="Random Anecdote" />
+      <Button handleClick={() => setScore()} text="vote" />
+      <p>Quote with most votes is:</p>
+      <blockquote><p>{anecdotes[newMax]}</p></blockquote>
     </div>
   )
 }
