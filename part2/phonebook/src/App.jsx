@@ -24,8 +24,16 @@ const App = () => {
         const personObject = {name: newName, number: newNumber}
         const personsArray = persons.map(person => person.name)
         if (personsArray.includes(personObject.name)) {
-            console.log("if works");
-            alert(`${personObject.name} already in the list!`);
+            if (window.confirm("Person already in the list! Are you sure you want to change its number?")) {
+                const my_id = persons.filter(person => person.name === personObject.name)[0].id
+                personService
+                    .update(my_id, personObject)
+                    .then(returnedPerson => {
+                        setPersons(persons.map(person => person.id !== my_id ? person : returnedPerson));
+                        setNewName('');
+                        setNewNumber('');
+                    })
+            }
         } else {
             personService
                 .create(personObject)
