@@ -1,2 +1,5 @@
 node_modules
 part2/phonebook/db.json
+*.json
+/.idea/
+/part2/phonebook/.idea/
