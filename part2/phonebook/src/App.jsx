@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react'
+import { useState, useEffect } from 'react'
 import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
 import Person from './components/Person';
@@ -21,7 +21,7 @@ const App = () => {
 
     const addPerson = (event) => {
         event.preventDefault()
-        const personObject = {name: newName, number: newNumber}
+        const personObject = { name: newName, number: newNumber }
         const personsArray = persons.map(person => person.name)
         if (personsArray.includes(personObject.name)) {
             if (window.confirm("Person already in the list! Are you sure you want to change its number?")) {
@@ -75,12 +75,12 @@ const App = () => {
 
     return (<div>
         <h2>Phonebook</h2>
-        <Filter value={newFilter} onchange={handleFilterChange}/>
+        <Filter value={newFilter} onchange={handleFilterChange} />
         <h3>add new</h3>
         <PersonForm addPerson={addPerson} handleNameChange={handleNameChange}
-                    handleNumberChange={handleNumberChange}/>
+            handleNumberChange={handleNumberChange} />
         <h3>Numbers</h3>
-        <Person persons={filteredPersons} deletePerson={deletePerson}/>
+        <Person persons={filteredPersons} deletePerson={deletePerson} />
     </div>)
 }
 
