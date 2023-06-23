@@ -3,8 +3,26 @@ import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
 import Person from './components/Person';
 import personService from "./services/persons.js";
+import './index.css';
+
+const LogMessage = ({message}) => {
+    if (message === null) {
+        return null
+    }
+    return (
+        <div className="logMessage">
+          {message}
+        </div>
+    )
+}
 
 const App = () => {
+
+    const [persons, setPersons] = useState([])
+    const [newName, setNewName] = useState('')
+    const [newNumber, setNewNumber] = useState('')
+    const [newFilter, setNewFilter] = useState('')
+    const [logMessage, setLogMessage] = useState('Some log message...')
 
     useEffect(() => {
         personService
@@ -13,11 +31,6 @@ const App = () => {
                 setPersons(initialPersons)
             })
     }, [])
-
-    const [persons, setPersons] = useState([])
-    const [newName, setNewName] = useState('')
-    const [newNumber, setNewNumber] = useState('')
-    const [newFilter, setNewFilter] = useState('')
 
     const addPerson = (event) => {
         event.preventDefault()
@@ -43,7 +56,6 @@ const App = () => {
                     setNewNumber('');
                 })
         }
-
     }
 
     const handleNameChange = (event) => {
@@ -75,6 +87,7 @@ const App = () => {
 
     return (<div>
         <h2>Phonebook</h2>
+        <LogMessage message={logMessage} />
         <Filter value={newFilter} onchange={handleFilterChange} />
         <h3>add new</h3>
         <PersonForm addPerson={addPerson} handleNameChange={handleNameChange}
